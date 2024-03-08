@@ -10,7 +10,7 @@ namespace MyFlat.Maui
     {
         public MainActivity()
         {
-            MobileFlatWorker.EnqueueWork(TimeSpan.FromHours(1));
+            MobileFlatWorker.EnqueueWork(MobileFlatWorker.GetTomorrowTimeSpan());
         }
     }
 }

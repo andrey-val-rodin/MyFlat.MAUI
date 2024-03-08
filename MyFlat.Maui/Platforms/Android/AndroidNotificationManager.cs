@@ -75,9 +75,9 @@ namespace MyFlat.Maui
             var intent = new Intent(global::Android.App.Application.Context, typeof(MainActivity));
             intent.PutExtra(TitleKey, title);
             intent.PutExtra(MessageKey, message);
-            var pendingIntentFlags = /*(Build.VERSION.SdkInt >= BuildVersionCodes.S)
-                            ? PendingIntentFlags.OneShot | PendingIntentFlags.Immutable
-                            : */PendingIntentFlags.OneShot;
+            var pendingIntentFlags = (Build.VERSION.SdkInt >= BuildVersionCodes.S)
+                ? PendingIntentFlags.OneShot | PendingIntentFlags.Immutable
+                : PendingIntentFlags.OneShot;
             PendingIntent pendingIntent = PendingIntent.GetActivity(
                 Android.App.Application.Context, pendingIntentId++, intent, pendingIntentFlags);
 

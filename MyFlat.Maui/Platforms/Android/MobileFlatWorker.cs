@@ -62,13 +62,6 @@ namespace MyFlat.Maui
                     }
                     else
                     {
-string message = status.ToString();
-if (status == Status.Error)
-{
-    if (!string.IsNullOrEmpty(_messenger.ErrorMessage))
-        message += $": {_messenger.ErrorMessage}";
-}
-SendNotification("Status", message);
                         // Plan work soon
                         if (WebService.IsSuitableTimeToLoad)
                         {
@@ -105,11 +98,10 @@ SendNotification("Status", message);
                 // Do next work tomorrow
                 EnqueueWork(GetTomorrowTimeSpan());
             }
-            catch(Exception ex)
+            catch
             {
-                SendNotification("Exception", ex.Message);
-                // Do next work tomorrow
-                EnqueueWork(GetTomorrowTimeSpan());
+                // Do work in an hour
+                EnqueueWork(TimeSpan.FromHours(1));
             }
         }
 
