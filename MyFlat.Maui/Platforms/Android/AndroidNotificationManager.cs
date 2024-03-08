@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using AndroidX.Core.App;
 using MyFlat.Maui.Common;
@@ -78,13 +79,13 @@ namespace MyFlat.Maui
                             ? PendingIntentFlags.OneShot | PendingIntentFlags.Immutable
                             : */PendingIntentFlags.OneShot;
             PendingIntent pendingIntent = PendingIntent.GetActivity(
-                AndroidApp.Context, pendingIntentId++, intent, pendingIntentFlags);
+                Android.App.Application.Context, pendingIntentId++, intent, pendingIntentFlags);
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(global::Android.App.Application.Context, channelId)
                 .SetContentIntent(pendingIntent)
                 .SetContentTitle(title)
                 .SetContentText(message)
-                .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, Resource.Drawable.icon))
+                .SetLargeIcon(BitmapFactory.DecodeResource(Android.App.Application.Context.Resources, Resource.Drawable.icon))
                 .SetSmallIcon(Resource.Drawable.icon)
                 .SetDefaults((int)NotificationDefaults.Sound | (int)NotificationDefaults.Vibrate);
 
