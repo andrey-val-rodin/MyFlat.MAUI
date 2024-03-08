@@ -12,9 +12,12 @@
         <ScrollView BackgroundColor="#EEEEEE">
             <StackLayout>
                 <StackLayout Orientation="Horizontal" Padding ="24,10,20,10" BackgroundColor="LightCyan">
-                    <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Vertical"
+                                 HorizontalOptions="StartAndExpand">
                         <Label Text="МосОблЕирц" FontAttributes="Bold"/>
-                        <Label Text="{Binding MosOblEircText}" TextColor="SaddleBrown">
+                        <Label Text="{Binding MosOblEircText}"
+                               LineBreakMode="CharacterWrap"
+                               TextColor="SaddleBrown">
                             <Label.Triggers>
                                 <Trigger Property="Text" Value="Загрузка..." TargetType="Label">
                                     <Setter Property="TextColor" Value="Black"/>
@@ -29,14 +32,17 @@
                         </Label>
                     </StackLayout>
                     <Button Text="Личный кабинет"
-                    Command="{Binding OpenMosOblEircCommand}"
-                    VerticalOptions="EndAndExpand"
-                    HorizontalOptions="EndAndExpand"/>
+                            Command="{Binding OpenMosOblEircCommand}"
+                            VerticalOptions="EndAndExpand"
+                            HorizontalOptions="EndAndExpand"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" Padding ="24,10,20,10" BackgroundColor="LightCyan">
-                    <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Vertical"
+                                 HorizontalOptions="StartAndExpand">
                         <Label Text="Глобус" FontAttributes="Bold"/>
-                        <Label Text="{Binding GlobusText}" TextColor="SaddleBrown">
+                        <Label Text="{Binding GlobusText}"
+                               LineBreakMode="CharacterWrap"
+                               TextColor="SaddleBrown">
                             <Label.Triggers>
                                 <Trigger Property="Text" Value="Загрузка..." TargetType="Label">
                                     <Setter Property="TextColor" Value="Black"/>
@@ -51,9 +57,9 @@
                         </Label>
                     </StackLayout>
                     <Button Text="Личный кабинет"
-                    Command="{Binding OpenGlobusCommand}"
-                    VerticalOptions="EndAndExpand"
-                    HorizontalOptions="EndAndExpand"/>
+                            Command="{Binding OpenGlobusCommand}"
+                            VerticalOptions="EndAndExpand"
+                            HorizontalOptions="EndAndExpand"/>
                 </StackLayout>
                 <StackLayout Padding="24" Orientation="Vertical" BackgroundColor="LightCyan">
                     <StackLayout IsEnabled="{Binding CanPassWaterMeters}">

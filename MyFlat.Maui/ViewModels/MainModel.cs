@@ -43,7 +43,7 @@ namespace MyFlat.Maui.ViewModels
             set { SetProperty(ref _isEnabled, value); }
         }
 
-        public bool UseMeters => WebService.UseMeters;
+        public static bool UseMeters => WebService.UseMeters;
 
         public string MosOblEircText
         {
@@ -177,7 +177,7 @@ namespace MyFlat.Maui.ViewModels
                 GlobusText = _model.GlobusBalance == 0 ?
                     "Оплачено" : $"Выставлен счёт на {_model.GlobusBalance} руб";
 
-                if (UseMeters)
+                if (MainModel.UseMeters)
                 {
                     KitchenColdWaterOldMeter = _model.Meters.KitchenColdWaterMeter.ToString();
                     KitchenHotWaterOldMeter = _model.Meters.KitchenHotWaterMeter.ToString();
@@ -203,7 +203,7 @@ namespace MyFlat.Maui.ViewModels
 
         private async Task<bool> PassMetersAsync()
         {
-            if (!UseMeters)
+            if (!MainModel.UseMeters)
                 return false;
             if (!CanPassMeters)
             {
@@ -247,26 +247,26 @@ namespace MyFlat.Maui.ViewModels
             var result = new Meters();
             if (CanPassWaterMeters)
             {
-                result.KitchenColdWaterMeter = ToInt(KitchenColdWaterMeter);
-                result.KitchenHotWaterMeter = ToInt(KitchenHotWaterMeter);
-                result.BathroomColdWaterMeter = ToInt(BathroomColdWaterMeter);
-                result.BathroomHotWaterMeter = ToInt(BathroomHotWaterMeter);
+                result.KitchenColdWaterMeter = MainModel.ToInt(KitchenColdWaterMeter);
+                result.KitchenHotWaterMeter = MainModel.ToInt(KitchenHotWaterMeter);
+                result.BathroomColdWaterMeter = MainModel.ToInt(BathroomColdWaterMeter);
+                result.BathroomHotWaterMeter = MainModel.ToInt(BathroomHotWaterMeter);
             }
 
             if (CanPassElectricityMeter)
-                result.ElectricityMeter = ToInt(ElectricityMeter);
+                result.ElectricityMeter = MainModel.ToInt(ElectricityMeter);
 
             return result;
         }
 
-        private int ToInt(string value)
+        private static int ToInt(string value)
         {
             return int.TryParse(value, out int result) ? result : 0;
         }
 
         private string ValidateMeters(Meters meters)
         {
-            if (IsMetersEmpty(meters))
+            if (MainModel.IsMetersEmpty(meters))
                 return "Показания не заданы";
 
             if (CanPassWaterMeters)
@@ -287,7 +287,7 @@ namespace MyFlat.Maui.ViewModels
             return null;
         }
 
-        private bool IsMetersEmpty(Meters meters)
+        private static bool IsMetersEmpty(Meters meters)
         {
             return meters == null || (
                 meters.KitchenColdWaterMeter == 0 &&
