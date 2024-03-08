@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:MyFlat.Maui.ViewModels"
+             x:DataType="viewmodels:MainModel"
+             x:Class="MyFlat.Maui.MainPage"
+             Title="Моя квартира">
+
+    <RefreshView IsRefreshing="{Binding IsBusy}"
+                 IsEnabled="{Binding IsEnabled}"
+                 Command="{Binding RefreshCommand}">
+        <ScrollView BackgroundColor="#EEEEEE">
+            <StackLayout>
+                <StackLayout Orientation="Horizontal" Padding ="24,10,20,10" BackgroundColor="LightCyan">
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="МосОблЕирц" FontAttributes="Bold"/>
+                        <Label Text="{Binding MosOblEircText}" TextColor="SaddleBrown">
+                            <Label.Triggers>
+                                <Trigger Property="Text" Value="Загрузка..." TargetType="Label">
+                                    <Setter Property="TextColor" Value="Black"/>
+                                </Trigger>
+                                <Trigger Property="Text" Value="Ошибка" TargetType="Label">
+                                    <Setter Property="TextColor" Value="Red"/>
+                                </Trigger>
+                                <Trigger Property="Text" Value="Оплачено" TargetType="Label">
+                                    <Setter Property="TextColor" Value="DimGray"/>
+                                </Trigger>
+                            </Label.Triggers>
+                        </Label>
+                    </StackLayout>
+                    <Button Text="Личный кабинет"
+                    Command="{Binding OpenMosOblEircCommand}"
+                    VerticalOptions="EndAndExpand"
+                    HorizontalOptions="EndAndExpand"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Padding ="24,10,20,10" BackgroundColor="LightCyan">
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Глобус" FontAttributes="Bold"/>
+                        <Label Text="{Binding GlobusText}" TextColor="SaddleBrown">
+                            <Label.Triggers>
+                                <Trigger Property="Text" Value="Загрузка..." TargetType="Label">
+                                    <Setter Property="TextColor" Value="Black"/>
+                                </Trigger>
+                                <Trigger Property="Text" Value="Ошибка" TargetType="Label">
+                                    <Setter Property="TextColor" Value="Red"/>
+                                </Trigger>
+                                <Trigger Property="Text" Value="Оплачено" TargetType="Label">
+                                    <Setter Property="TextColor" Value="DimGray"/>
+                                </Trigger>
+                            </Label.Triggers>
+                        </Label>
+                    </StackLayout>
+                    <Button Text="Личный кабинет"
+                    Command="{Binding OpenGlobusCommand}"
+                    VerticalOptions="EndAndExpand"
+                    HorizontalOptions="EndAndExpand"/>
+                </StackLayout>
+                <StackLayout Padding="24" Orientation="Vertical" BackgroundColor="LightCyan">
+                    <StackLayout IsEnabled="{Binding CanPassWaterMeters}">
+                        <StackLayout.Triggers>
+                            <Trigger Property="IsEnabled" Value="true" TargetType="StackLayout">
+                                <Setter Property="BackgroundColor" Value="White"/>
+                            </Trigger>
+                        </StackLayout.Triggers>
+                        <StackLayout Orientation="Horizontal">
+                            <Entry Text="{Binding KitchenColdWaterMeter}"
+                                    Keyboard="Numeric"
+                                    Placeholder="Кухня хол. вода"
+                                    Focused="OnEntryFocused"/>
+                            <Label Text="{Binding KitchenColdWaterOldMeter}" VerticalOptions="End" Padding="12"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Entry Text="{Binding KitchenHotWaterMeter}"
+                                    Keyboard="Numeric"
+                                    Placeholder="Кухня гор. вода"
+                                    Focused="OnEntryFocused"/>
+                            <Label Text="{Binding KitchenHotWaterOldMeter}" VerticalOptions="End" Padding="12"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Entry Text="{Binding BathroomColdWaterMeter}"
+                                    Keyboard="Numeric"
+                                    Placeholder="Санузел хол. вода"
+                                    Focused="OnEntryFocused"/>
+                            <Label Text="{Binding BathroomColdWaterOldMeter}" VerticalOptions="End" Padding="12"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Entry Text="{Binding BathroomHotWaterMeter}"
+                                    Keyboard="Numeric"
+                                    Placeholder="Санузел гор. вода"
+                                    Focused="OnEntryFocused"/>
+                            <Label Text="{Binding BathroomHotWaterOldMeter}" VerticalOptions="End" Padding="12"/>
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout IsEnabled="{Binding CanPassElectricityMeter}">
+                        <StackLayout.Triggers>
+                            <Trigger Property="IsEnabled" Value="true" TargetType="StackLayout">
+                                <Setter Property="BackgroundColor" Value="White"/>
+                            </Trigger>
+                        </StackLayout.Triggers>
+                        <StackLayout Orientation="Horizontal">
+                            <Entry Text="{Binding ElectricityMeter}"
+                                   Keyboard="Numeric"
+                                   Placeholder="Электричество"
+                                   Focused="OnEntryFocused"/>
+                            <Label Text="{Binding ElectricityOldMeter}" VerticalOptions="End" Padding="12"/>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+                <Button Text="Передать показания" Command="{Binding PassMetersCommand}"/>
+            </StackLayout>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>

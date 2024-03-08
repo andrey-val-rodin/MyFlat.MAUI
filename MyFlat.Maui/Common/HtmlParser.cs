@@ -1,0 +1,54 @@
+﻿using System.Globalization;
+using System.Text.RegularExpressions;
+
+namespace MyFlat.Maui.Common
+{
+    public static class HtmlParser
+    {
+        public static bool TryGetBalance(string html, out decimal result)
+        {
+            ArgumentNullException.ThrowIfNull(html, nameof(html));
+
+            result = 0;
+            try
+            {
+                var pattern = "\"DEBT_END\" {0,}: {0,}\"-?[0-9,.]+\"";
+                var match = Regex.Match(html, pattern);
+                if (!match.Success)
+                    return false;
+
+                var strings = match.Value.Split('"');
+                result = decimal.Parse(strings[3], CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool TryGetSessionId(string html, out string result)
+        {
+            ArgumentNullException.ThrowIfNull(html, nameof(html));
+
+            result = null;
+            try
+            {
+                var pattern = "'bitrix_sessid' {0,}: {0,}'.*'";
+                var match = Regex.Match(html, pattern);
+                if (!match.Success)
+                    return false;
+
+                var strings = match.Value.Split('\'');
+                result = strings[3];
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
+        }
+    }
+}
