@@ -61,7 +61,10 @@
                             VerticalOptions="EndAndExpand"
                             HorizontalOptions="EndAndExpand"/>
                 </StackLayout>
-                <StackLayout Padding="24" Orientation="Vertical" BackgroundColor="LightCyan">
+                <StackLayout Padding="24"
+                             Orientation="Vertical"
+                             BackgroundColor="LightCyan"
+                             IsVisible="{Binding UseMeters}">
                     <StackLayout IsEnabled="{Binding CanPassWaterMeters}">
                         <StackLayout.Triggers>
                             <Trigger Property="IsEnabled" Value="true" TargetType="StackLayout">
@@ -70,30 +73,30 @@
                         </StackLayout.Triggers>
                         <StackLayout Orientation="Horizontal">
                             <Entry Text="{Binding KitchenColdWaterMeter}"
-                                    Keyboard="Numeric"
-                                    Placeholder="Кухня хол. вода"
-                                    Focused="OnEntryFocused"/>
+                                   Keyboard="Numeric"
+                                   Placeholder="Кухня хол. вода"
+                                   Focused="OnEntryFocused"/>
                             <Label Text="{Binding KitchenColdWaterOldMeter}" VerticalOptions="End" Padding="12"/>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
                             <Entry Text="{Binding KitchenHotWaterMeter}"
-                                    Keyboard="Numeric"
-                                    Placeholder="Кухня гор. вода"
-                                    Focused="OnEntryFocused"/>
+                                   Keyboard="Numeric"
+                                   Placeholder="Кухня гор. вода"
+                                   Focused="OnEntryFocused"/>
                             <Label Text="{Binding KitchenHotWaterOldMeter}" VerticalOptions="End" Padding="12"/>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
                             <Entry Text="{Binding BathroomColdWaterMeter}"
-                                    Keyboard="Numeric"
-                                    Placeholder="Санузел хол. вода"
-                                    Focused="OnEntryFocused"/>
+                                   Keyboard="Numeric"
+                                   Placeholder="Санузел хол. вода"
+                                   Focused="OnEntryFocused"/>
                             <Label Text="{Binding BathroomColdWaterOldMeter}" VerticalOptions="End" Padding="12"/>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
                             <Entry Text="{Binding BathroomHotWaterMeter}"
-                                    Keyboard="Numeric"
-                                    Placeholder="Санузел гор. вода"
-                                    Focused="OnEntryFocused"/>
+                                   Keyboard="Numeric"
+                                   Placeholder="Санузел гор. вода"
+                                   Focused="OnEntryFocused"/>
                             <Label Text="{Binding BathroomHotWaterOldMeter}" VerticalOptions="End" Padding="12"/>
                         </StackLayout>
                     </StackLayout>
@@ -112,7 +115,9 @@
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
-                <Button Text="Передать показания" Command="{Binding PassMetersCommand}"/>
+                <Button Text="Передать показания"
+                        IsVisible="{Binding UseMeters}"
+                        Command="{Binding PassMetersCommand}"/>
             </StackLayout>
         </ScrollView>
     </RefreshView>

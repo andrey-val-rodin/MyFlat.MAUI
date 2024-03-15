@@ -43,7 +43,7 @@ namespace MyFlat.Maui.ViewModels
             set { SetProperty(ref _isEnabled, value); }
         }
 
-        public static bool UseMeters => WebService.UseMeters;
+        public bool UseMeters => WebService.UseMeters;
 
         public string MosOblEircText
         {
@@ -177,7 +177,7 @@ namespace MyFlat.Maui.ViewModels
                 GlobusText = _model.GlobusBalance == 0 ?
                     "Оплачено" : $"Выставлен счёт на {_model.GlobusBalance} руб";
 
-                if (MainModel.UseMeters)
+                if (UseMeters)
                 {
                     KitchenColdWaterOldMeter = _model.Meters.KitchenColdWaterMeter.ToString();
                     KitchenHotWaterOldMeter = _model.Meters.KitchenHotWaterMeter.ToString();
@@ -203,7 +203,7 @@ namespace MyFlat.Maui.ViewModels
 
         private async Task<bool> PassMetersAsync()
         {
-            if (!MainModel.UseMeters)
+            if (!UseMeters)
                 return false;
             if (!CanPassMeters)
             {

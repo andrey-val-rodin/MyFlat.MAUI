@@ -4,13 +4,13 @@ using MyFlat.Maui.Models;
 
 namespace MyFlat.Maui.Services
 {
-    public class WebService
+    public class WebService(IMessenger messenger)
     {
-        private readonly IMessenger _messenger;
-        private readonly MosOblEircService _mosOblEircService;
-        private readonly GlobusService _globusService;
+        private readonly IMessenger _messenger = messenger;
+        private readonly MosOblEircService _mosOblEircService = new(messenger);
+        private readonly GlobusService _globusService = new(messenger);
         private IList<MeterChildDto> _meters;
-        private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+        private static readonly SemaphoreSlim _semaphore = new(1, 1);
 
         // Kitchen cold water   323381, 17523577
         private MeterChildDto KitchenColdWater => GetMeter(17523577);
@@ -98,13 +98,6 @@ namespace MyFlat.Maui.Services
 
                 return false;
             }
-        }
-
-        public WebService(IMessenger messenger)
-        {
-            _messenger = messenger;
-            _mosOblEircService = new MosOblEircService(messenger);
-            _globusService = new GlobusService(messenger);
         }
 
         private MeterChildDto GetMeter(int id)
@@ -261,8 +254,7 @@ namespace MyFlat.Maui.Services
         {
             if (!UseMeters)
                 return false;
-            if (meters == null)
-                throw new ArgumentNullException(nameof(meters));
+            ArgumentNullException.ThrowIfNull(meters);
 
             if (meters.KitchenColdWaterMeter == 0 &&
                 meters.KitchenHotWaterMeter == 0 &&
