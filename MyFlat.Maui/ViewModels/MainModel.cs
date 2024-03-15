@@ -43,6 +43,7 @@ namespace MyFlat.Maui.ViewModels
             set { SetProperty(ref _isEnabled, value); }
         }
 
+#pragma warning disable CA1822
         public bool UseMeters => WebService.UseMeters;
 
         public string MosOblEircText

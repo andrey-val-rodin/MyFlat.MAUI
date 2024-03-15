@@ -75,10 +75,10 @@ namespace MyFlat.Maui.Services
                 if (now.Day >= 5 && now.Day <= 25)
                 {
                     return
-                        KitchenColdWater?.GetDate().Month != now.Month ||
-                        KitchenHotWater?.GetDate().Month != now.Month ||
-                        BathroomColdWater?.GetDate().Month != now.Month ||
-                        BathroomHotWater?.GetDate().Month != now.Month;
+                        KitchenColdWater?.GetDate()?.Month != now.Month ||
+                        KitchenHotWater?.GetDate()?.Month != now.Month ||
+                        BathroomColdWater?.GetDate()?.Month != now.Month ||
+                        BathroomHotWater?.GetDate()?.Month != now.Month;
                 }
 
                 return false;
@@ -94,7 +94,7 @@ namespace MyFlat.Maui.Services
 
                 var now = DateTime.Now;
                 if (now.Day >= 15 && now.Day <= 26)
-                    return Electricity?.GetDate().Month != now.Month;
+                    return Electricity?.GetDate()?.Month != now.Month;
 
                 return false;
             }
