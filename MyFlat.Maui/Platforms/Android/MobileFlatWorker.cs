@@ -58,20 +58,20 @@ namespace MyFlat.Maui
                     if (status == Status.Skipped)
                     {
                         // Do work tomorrow
-                        EnqueueWork(GetTomorrowTimeSpan());
+                        EnqueueWork(WebService.GetTomorrowTimeSpan());
                     }
                     else
                     {
                         // Plan work soon
-                        if (WebService.IsSuitableTimeToLoad)
+                        if (WebService.IsSuitableTimeToLoad(DateTime.Now))
                         {
                             // Do work in an hour
-                            EnqueueWork(TimeSpan.FromHours(1));
+                            EnqueueWork(WebService.GetOneHourTimeSpan());
                         }
                         else
                         {
                             // Do work tomorrow
-                            EnqueueWork(GetTomorrowTimeSpan());
+                            EnqueueWork(WebService.GetTomorrowTimeSpan());
                         }
                     }
 
@@ -96,12 +96,12 @@ namespace MyFlat.Maui
                 }
 
                 // Do next work tomorrow
-                EnqueueWork(GetTomorrowTimeSpan());
+                EnqueueWork(WebService.GetTomorrowTimeSpan());
             }
             catch
             {
                 // Do work in an hour
-                EnqueueWork(TimeSpan.FromHours(1));
+                EnqueueWork(WebService.GetOneHourTimeSpan());
             }
         }
 
@@ -141,14 +141,6 @@ namespace MyFlat.Maui
             {
                 return false;
             }
-        }
-
-        public static TimeSpan GetTomorrowTimeSpan()
-        {
-            var now = DateTime.Now;
-            var tomorrow = now + TimeSpan.FromDays(1);
-            var time = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 10, 0, 0);
-            return time - now;
         }
 
         class Messenger : IMessenger

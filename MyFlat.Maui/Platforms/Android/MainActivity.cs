@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using System.Runtime.Versioning;
+using MyFlat.Maui.Services;
 
 namespace MyFlat.Maui
 {
@@ -10,7 +11,7 @@ namespace MyFlat.Maui
     {
         public MainActivity()
         {
-            MobileFlatWorker.EnqueueWork(MobileFlatWorker.GetTomorrowTimeSpan());
+            MobileFlatWorker.EnqueueWork(WebService.GetTomorrowTimeSpan());
         }
     }
 }

@@ -45,22 +45,14 @@ namespace MyFlat.Maui.Services
         {
             get
             {
-                if (!IsSuitableTimeToLoad)
+                var now = DateTime.Now;
+                if (!IsSuitableTimeToLoad(now))
                     return false;
 
                 if (Status != Status.Loaded)
                     return true;
 
-                return Timestamp.Date != DateTime.Now.Date;
-            }
-        }
-
-        public static bool IsSuitableTimeToLoad
-        {
-            get
-            {
-                var hour = DateTime.Now.Hour;
-                return hour >= 10 && hour <= 20;
+                return Timestamp.Date != now.Date;
             }
         }
 
@@ -105,6 +97,31 @@ namespace MyFlat.Maui.Services
             return _meters?.FirstOrDefault(c => c.Id_counter == id);
         }
 
+        public static bool IsSuitableTimeToLoad(DateTime time)
+        {
+            var hour = time.Hour;
+            return hour >= 10 && hour <= 20;
+        }
+
+        public static TimeSpan GetTomorrowTimeSpan()
+        {
+            var now = DateTime.Now;
+            var tomorrow = now;
+            if (now.Hour >= 10)
+                tomorrow = tomorrow.AddDays(1);
+            var time = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 10, 0, 0);
+            return time - now;
+        }
+
+        public static TimeSpan GetOneHourTimeSpan()
+        {
+            var result = TimeSpan.FromHours(1);
+            if (IsSuitableTimeToLoad(DateTime.Now + result))
+                return result;
+
+            return GetTomorrowTimeSpan();
+        }
+
         public async Task<Status> LoadAsync(bool checkConditions)
         {
             await _semaphore.WaitAsync();
@@ -112,7 +129,7 @@ namespace MyFlat.Maui.Services
             {
                 if (checkConditions)
                 {
-                    if (!IsSuitableTimeToLoad)
+                    if (!IsSuitableTimeToLoad(DateTime.Now))
                         return Status.Skipped;
 
                     if (!NeedToLoad)
