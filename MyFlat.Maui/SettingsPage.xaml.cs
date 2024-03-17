@@ -14,6 +14,8 @@ namespace MyFlat.Maui
             BindingContext = _viewModel;
         }
 
+        public IConfig Config { get; set; } = new ConfigImpl();
+
         protected override async void OnAppearing()
         {
             _viewModel.MosOblEircUser = await Config.GetMosOblEircUserAsync();

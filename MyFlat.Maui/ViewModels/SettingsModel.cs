@@ -15,6 +15,8 @@ namespace MyFlat.Maui.ViewModels
         private string _globusUser;
         private string _globusPassword;
 
+        public IConfig Config { get; set; } = new ConfigImpl();
+
         public string MosOblEircUser
         {
             get => _mosOblEircUser;

@@ -1,12 +1,17 @@
-﻿using System.Security.Cryptography;
+﻿using MyFlat.Maui.Common;
+using MyFlat.Maui.Models;
+using System.Security.Cryptography;
 using System.Text;
 
 #pragma warning disable CA1416
 
 namespace Tests.Services
 {
-    internal static class Config
+    public class ConfigStub : IConfig
     {
+        int _globusBalanceAccessCount;
+        decimal _lastGlobusBalance;
+
         public static string GlobusUser
         {
             get
@@ -96,6 +101,80 @@ namespace Tests.Services
                 return Encoding.ASCII.GetString(
                     ProtectedData.Unprotect(bytes, null, DataProtectionScope.LocalMachine));
             }
+        }
+
+        public int GetGlobusBalanceAccessCount()
+        {
+            return _globusBalanceAccessCount;
+        }
+
+        public Task<string> GetGlobusPasswordAsync()
+        {
+            return Task.FromResult(GlobusPassword);
+        }
+
+        public Task<string> GetGlobusUserAsync()
+        {
+            return Task.FromResult(GlobusUser);
+        }
+
+        public decimal GetLastGlobusBalance()
+        {
+            return _lastGlobusBalance;
+        }
+
+        public Task<string> GetMosOblEircPasswordAsync()
+        {
+            return Task.FromResult(MosOblEircPassword);
+        }
+
+        public Task<string> GetMosOblEircUserAsync()
+        {
+            return Task.FromResult(MosOblEircUser);
+        }
+
+        public async Task<bool> IsSetAsync()
+        {
+            return
+                !string.IsNullOrWhiteSpace(await GetMosOblEircUserAsync()) &&
+                !string.IsNullOrWhiteSpace(await GetMosOblEircPasswordAsync()) &&
+                !string.IsNullOrWhiteSpace(await GetGlobusUserAsync()) &&
+                !string.IsNullOrWhiteSpace(await GetGlobusPasswordAsync());
+        }
+
+        public Task SaveAsync(Settings model)
+        {
+            return Task.FromResult(true);
+        }
+
+        public void SetGlobusBalanceAccessCount(int value)
+        {
+            _globusBalanceAccessCount = value;
+        }
+
+        public Task SetGlobusPasswordAsync(string value)
+        {
+            return Task.FromResult(true);
+        }
+
+        public Task SetGlobusUserAsync(string value)
+        {
+            return Task.FromResult(true);
+        }
+
+        public void SetLastGlobusBalance(decimal value)
+        {
+            _lastGlobusBalance = value;
+        }
+
+        public Task SetMosOblEircPasswordAsync(string value)
+        {
+            return Task.FromResult(true);
+        }
+
+        public Task SetMosOblEircUserAsync(string value)
+        {
+            return Task.FromResult(true);
         }
     }
 }

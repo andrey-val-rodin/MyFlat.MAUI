@@ -31,6 +31,8 @@ namespace MyFlat.Maui.ViewModels
         public Command PassMetersCommand { get; }
         public Command RefreshCommand { get; }
 
+        public IConfig Config { get; set; } = new ConfigImpl();
+
         public bool IsBusy
         {
             get { return _isBusy; }

@@ -13,21 +13,23 @@ namespace MyFlat.Maui.Services
         private static readonly SemaphoreSlim _semaphore = new(1, 1);
 
         // Kitchen cold water   323381, 17523577
-        private MeterChildDto KitchenColdWater => GetMeter(17523577);
+        public MeterChildDto KitchenColdWater => GetMeter(17523577);
         // Kitchen hot water    206922, 16702145
-        private MeterChildDto KitchenHotWater => GetMeter(16702145);
+        public MeterChildDto KitchenHotWater => GetMeter(16702145);
         // Bathroom hot water   204933, 16702144
-        private MeterChildDto BathroomColdWater => GetMeter(17523578);
+        public MeterChildDto BathroomColdWater => GetMeter(17523578);
         // Bathroom hot water   204933, 16702144
-        private MeterChildDto BathroomHotWater => GetMeter(16702144);
+        public MeterChildDto BathroomHotWater => GetMeter(16702144);
         // Electricity          19843385, 14680903
-        private MeterChildDto Electricity => GetMeter(14680903);
+        public MeterChildDto Electricity => GetMeter(14680903);
 
         public Main Model { get; private set; }
 
         public DateTime Timestamp { get; private set; } = DateTime.MinValue;
 
         public Status Status { get; private set; } = Status.NotLoaded;
+
+        public IConfig Config { get; set; } = new ConfigImpl();
 
         public static bool UseMeters
         {

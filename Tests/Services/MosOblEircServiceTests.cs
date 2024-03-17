@@ -15,14 +15,14 @@ namespace Tests.Services
         public async Task Authorize_CorrectCredentials_True()
         {
             var service = new MosOblEircService(new MessengerStub());
-            Assert.True(await service.AuthorizeAsync(Config.MosOblEircUser, Config.MosOblEircPassword));
+            Assert.True(await service.AuthorizeAsync(ConfigStub.MosOblEircUser, ConfigStub.MosOblEircPassword));
         }
 
         [Fact]
         public async Task LogoffAsync_CorrectCredentials_True()
         {
             var service = new MosOblEircService(new MessengerStub());
-            await service.AuthorizeAsync(Config.MosOblEircUser, Config.MosOblEircPassword);
+            await service.AuthorizeAsync(ConfigStub.MosOblEircUser, ConfigStub.MosOblEircPassword);
             Assert.True(await service.LogoffAsync());
         }
 
@@ -37,7 +37,7 @@ namespace Tests.Services
         public async Task GetBalanceAsync_Success()
         {
             var service = new MosOblEircService(new MessengerStub());
-            await service.AuthorizeAsync(Config.MosOblEircUser, Config.MosOblEircPassword);
+            await service.AuthorizeAsync(ConfigStub.MosOblEircUser, ConfigStub.MosOblEircPassword);
             Assert.NotNull(await service.GetBalanceAsync());
             await service.LogoffAsync();
         }
@@ -46,11 +46,11 @@ namespace Tests.Services
         public async Task GetMetersAsync_Success()
         {
             var service = new MosOblEircService(new MessengerStub());
-            await service.AuthorizeAsync(Config.MosOblEircUser, Config.MosOblEircPassword);
+            await service.AuthorizeAsync(ConfigStub.MosOblEircUser, ConfigStub.MosOblEircPassword);
             var meters = await service.GetMetersAsync();
 
             Assert.NotNull(meters);
-            Assert.True(meters.Count == 5);
+            Assert.Equal(5, meters.Count);
             // Kitchen cold water   323381, 17523577
             Assert.Contains(meters, m => m.Id_counter == 17523577);
             // Kitchen hot water    206922, 16702145

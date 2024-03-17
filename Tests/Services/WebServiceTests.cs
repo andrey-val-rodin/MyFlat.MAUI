@@ -1,3 +1,4 @@
+using MyFlat.Maui.Models;
 using MyFlat.Maui.Services;
 
 namespace Tests.Services
@@ -77,13 +78,38 @@ namespace Tests.Services
             Assert.Equal(expected, actual, TimeSpan.FromMilliseconds(1));
         }
 
+        [Fact]
+        public async Task LoadAsync_SuccessIfCurrentTimeIsSuitable()
+        {
+            await WaitSecondIfTimeIsNear(9, 59, 59);
+            await WaitSecondIfTimeIsNear(21, 59, 59);
+
+            if (!WebService.IsSuitableTimeToLoad(DateTime.Now))
+                return; // skip test
+
+            var service = new WebService(null) { Config = new ConfigStub() };
+            var status = await service.LoadAsync(false);
+
+            Assert.Equal(Status.Loaded, status);
+            Assert.Equal(Status.Loaded, service.Status);
+            if (WebService.UseMeters)
+            {
+                Assert.NotNull(service.KitchenColdWater);
+                Assert.NotNull(service.KitchenHotWater);
+                Assert.NotNull(service.BathroomColdWater);
+                Assert.NotNull(service.BathroomHotWater);
+                Assert.NotNull(service.Electricity);
+            }
+            Assert.NotNull(service.Model);
+            Assert.Equal(DateTime.Now, service.Timestamp, TimeSpan.FromMilliseconds(10));
+        }
+
         static async Task WaitSecondIfTimeIsNear(int hour, int minute, int second)
         {
             var now = DateTime.Now;
             while (now.Hour == hour && now.Minute == minute && now.Second == second)
             {
                 await Task.Delay(100);
-                Assert.False(true);
                 now = DateTime.Now;
             }
         }
