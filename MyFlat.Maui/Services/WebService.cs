@@ -12,16 +12,16 @@ namespace MyFlat.Maui.Services
         private IList<MeterChildDto> _meters;
         private static readonly SemaphoreSlim _semaphore = new(1, 1);
 
-        // Kitchen cold water   323381, 17523577
-        public MeterChildDto KitchenColdWater => GetMeter(17523577);
-        // Kitchen hot water    206922, 16702145
-        public MeterChildDto KitchenHotWater => GetMeter(16702145);
-        // Bathroom hot water   204933, 16702144
-        public MeterChildDto BathroomColdWater => GetMeter(17523578);
-        // Bathroom hot water   204933, 16702144
-        public MeterChildDto BathroomHotWater => GetMeter(16702144);
-        // Electricity          19843385, 14680903
-        public MeterChildDto Electricity => GetMeter(14680903);
+        // Kitchen cold water   323381
+        public MeterChildDto KitchenColdWater => GetMeter("323381");
+        // Kitchen hot water    206922
+        public MeterChildDto KitchenHotWater => GetMeter("206922");
+        // Bathroom cold water   323391 (на самом деле - 323392, ошиблись в МосОблЕИРЦ)
+        public MeterChildDto BathroomColdWater => GetMeter("323391");
+        // Bathroom hot water   204933
+        public MeterChildDto BathroomHotWater => GetMeter("204933");
+        // Electricity          19843385
+        public MeterChildDto Electricity => GetMeter("19843385");
 
         public Main Model { get; private set; }
 
@@ -66,7 +66,7 @@ namespace MyFlat.Maui.Services
                     return false;
 
                 var now = DateTime.Now;
-                if (now.Day >= 5 && now.Day <= 25)
+                if (now.Day >= 1 && now.Day <= 25)
                 {
                     return
                         KitchenColdWater?.GetDate()?.Month != now.Month ||
@@ -94,9 +94,9 @@ namespace MyFlat.Maui.Services
             }
         }
 
-        private MeterChildDto GetMeter(int id)
+        private MeterChildDto GetMeter(string id)
         {
-            return _meters?.FirstOrDefault(c => c.Id_counter == id);
+            return _meters?.FirstOrDefault(c => c.Nm_counter == id);
         }
 
         public static bool IsSuitableTimeToLoad(DateTime time)
