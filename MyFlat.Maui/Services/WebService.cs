@@ -66,7 +66,7 @@ namespace MyFlat.Maui.Services
                     return false;
 
                 var now = DateTime.Now;
-                if (now.Day >= 1 && now.Day <= 25)
+                if (now.Day >= 5 && now.Day <= 25)
                 {
                     return
                         KitchenColdWater?.GetDate()?.Month != now.Month ||
